@@ -1,0 +1,168 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "New Beginnings parcitipants microservice",
+        "description": "New Beginnings parcitipants microservice"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Participants",
+            "description": "Api for participants of new beginnings program"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/participants": {
+            "get": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Gets all participants",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#definitions/Participants"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Participants"
+                ],
+                "description": "Add new participant to new beginnings study",
+                "parameters" : [
+                    {
+                        "name":"participant",
+                        "in":"body",
+                        "description":"Participant to be added",
+                        "schema": {
+                            "$ref": "#definitions/Participant" 
+                        }
+                    }
+                ],
+                "produces" : [
+                    "application/json"
+                ],
+                "responses" : {
+                    "200" : {
+                        "description" :"Participant added",
+                          "schema": {
+                            "$ref": "#definitions/Participant" 
+                        } 
+                    },
+                    "400" : {
+                        "description" : "Something went wrong"
+                    }
+                }
+            }
+        },
+        "/participants/{referenceNumber}": {
+            "parameters": [
+                {
+                    "name": "referenceNumber",
+                    "in": "path",
+                    "required": "true",
+                    "description": "Reference numebr for the participant to find",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Gets user  by reference number",
+                "responses": {
+                    "200": {
+                        "description": "Participant found",
+                        "schema": {
+                            "$ref": "#definitions/Participant"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Deletes user  by reference number",
+                "responses": {
+                    "200": {
+                        "description": "Participant deleted",
+                        "schema": {
+                            "$ref": "#definitions/Participant"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Participants"
+                ],
+                "parameters": [
+                    {
+                        "name": "participant",
+                        "in": "body",
+                        "description": "Participant with new value of properties",
+                        "schema": {
+                            "$ref": "#definitions/Participant"
+                        }
+                    }
+                ],
+                "summary": "updates by reference number",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#definitions/Participant"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Participant": {
+            "required": [
+                "first_name",
+                "last_name",
+                "date_of_birth",
+                "phone_number",
+                "address"
+            ],
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                }
+            }
+        },
+        "Participants": {
+            "type": "array",
+            "$ref": "#definitions/Participant"
+        }
+    }
+}

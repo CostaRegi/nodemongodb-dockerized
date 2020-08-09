@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+    new-beginnings:
+        build:
+            context: .
+        ports:
+            - 8080:8080
+            - 9229:9229
+        env_file: .env
+        environment:
+            - MONGO_USERNAME=$MONGO_USERNAME
+            - MONGO_PASSWORD=$MONGO_PASSWORD
+            - MONGO_HOSTNAME=db
+            - MONGO_PORT=$MONGO_PORT
+            - MONGO_DB=$MONGO_DB 
+        volumes:
+          - ./:/code
+        links:
+          - database
+        command: npm run debug
+
+  
+    database:
+        image: mongo:latest
+        env_file: .env
+        container_name: db
+        environment:
+           MONGO_INITDB_ROOT_USERNAME: $MONGO_USERNAME
+           MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASSWORD
+        ports:
+           - 27017:27017
+        volumes:
+           - mongodb_data_container:/data/db
+
+volumes:
+    mongodb_data_container:
